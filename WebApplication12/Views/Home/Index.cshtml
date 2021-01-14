@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Management System</h2>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" />
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.blueopal.min.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+
+ID: <input type="text" name="id" id="textbox" value=""  class="form-control"/><br />
+Name : <input type="text" name="name" id="textbox"   class="form-control" value="" /><br />
+
+Father Name: <input type="text" name="fname" id="textbox"  class="form-control" value="" /><br />
+<input type="button" name="btn" id="btn1"  class="btn btn-primary" value="Add Employee " />
+<input type="button" name="btn2" id="btn2"  class="btn btn-primary" value="Delete Employee " />
+
+<input type="button" name="btn3" id="btn3"  class="btn btn-primary" value="Update Employee " />
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#tab1").css("display", "none");
+        $.getJSON("/api/infoes/", function (data) {
+            $("#tab1").css("display", "block");
+            $.each(data, function (key, val) {
+                $("<tr><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.fname + "</td></tr>").appendTo($("#tab1"));
+
+
+            })
+        })
+        //POST
+        $("#btn1").click(function () {
+            var name = $("#name").val();
+            var fname = $("#fname").val();
+            $.ajax({
+
+                type: "POST",
+
+                contentType: "application/json;charset=utf-8",
+
+                url: "/api/infoes/",
+
+                data: JSON.stringify({
+
+
+
+                    name: $("#name").val(),
+
+                    fname: $("#fname").val(),
+
+
+
+                }),
+
+                dataType: "JSON",
+
+                success: function (data) {
+                    $("#tab1").find("tr:gt(0)").remove();
+                    $.getJSON("/api/infoes/", function (data) {
+                        $("#tab1").css("display", "block");
+                        $.each(data, function (key, val) {
+                            $("<tr><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.fname + "</td></tr>").appendTo($("#tab1"));
+
+
+                        })
+
+                    })
+
+
+
+                }
+            });
+
+
+        })
+        //Delete
+        $("#btn2").click(function () {
+            var id = $("#id").val();
+
+            $.ajax({
+
+                type: "DELETE",
+
+                contentType: "application/json;charset=utf-8",
+
+                url: "/api/infoes/" + $("#id").val(),
+
+                data: JSON.stringify({
+
+
+
+                    name: $("#id").val(),
+
+
+
+
+
+                }),
+
+                dataType: "JSON",
+
+                success: function (data) {
+                    $("#tab1").find("tr:gt(0)").remove();
+                    $.getJSON("/api/infoes/", function (data) {
+                        $("#tab1").css("display", "block");
+                        $.each(data, function (key, val) {
+                            $("<tr><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.fname + "</td></tr>").appendTo($("#tab1"));
+
+
+                        })
+
+                    })
+
+
+
+                }
+            });
+
+
+        })
+
+        //Update
+        $("#btn3").click(function () {
+            var id = $("#id").val();
+            var name = $("#name").val();
+            var fname = $("#fname").val();
+            $.ajax({
+
+                type: "put",
+
+                contentType: "application/json;charset=utf-8",
+
+                url: "/api/infoes/" + $("#id").val(),
+
+                data: JSON.stringify({
+
+
+                    id: $("#id").val(),
+                    name: $("#name").val(),
+
+
+                    fname: $("#fname").val(),
+
+
+
+                }),
+
+                dataType: "JSON",
+
+                success: function (data) {
+                    $("#tab1").find("tr:gt(0)").remove();
+                    $.getJSON("/api/infoes/", function (data) {
+                        $("#tab1").css("display", "block");
+                        $.each(data, function (key, val) {
+                            $("<tr><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.fname + "</td></tr>").appendTo($("#tab1"));
+
+
+                        })
+
+                    })
+
+
+
+                }
+            });
+
+
+        })
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#textbox").kendoTextBox();
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#tab1").kendoGrid({
+            sortable: true,
+            filterable: true
+        });
+    });
+
+        var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "/api/infoes/",
+                dataType: "jsonp"
+            }
+        },
+        pageSize: 10
+       });
+    $("#grid").kendoGrid({
+        dataSource: dataSource,
+        pageable: true
+     });
+
+
+</script>

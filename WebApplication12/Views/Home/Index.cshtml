@@ -19,6 +19,11 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="register.js"></script>
+
 
 
 
@@ -78,11 +83,16 @@
     </div>
 </form>
 
+
 <br />
 <br />
 <br />
 
 <div id="tab1"></div>
+
+
+
+
 
 
 <script>
@@ -142,7 +152,7 @@
 
                 }
             });
-            $('#form_id').find('input:text').val(''); 
+            $('#form_id').find('input:text').val('');
 
 
         })
@@ -241,6 +251,7 @@
         })
 
     });
+    // for modal popup save and cancel
     $('#modal').on('shown.bs.modal', function () {
         $('#btn1').trigger('focus')
     })
@@ -250,7 +261,7 @@
 
 
 <script>
-   
+
 
     var dataSource = new kendo.data.DataSource({
         transport: {
@@ -272,4 +283,7 @@
         dataSource: dataSource,
 
     });
+</script>
+<script>
+
 </script>

@@ -2,27 +2,87 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Management System</h2>
+<h2>Management System </h2>
+<br />
+
 <script src="~/Scripts/jquery-1.10.2.js"></script>
-<
 <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" />
 <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.blueopal.min.css" />
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.default-v2.min.css" />
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.default-v2.min.css" />
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
 
 
-ID: <input type="text" name="id" id="textbox" value=""  class="form-control"/><br />
-Name : <input type="text" name="name" id="textbox"   class="form-control" value="" /><br />
 
-Father Name: <input type="text" name="fname" id="textbox"  class="form-control" value="" /><br />
-<input type="button" name="btn" id="btn1"  class="btn btn-primary" value="Add Employee " />
-<input type="button" name="btn2" id="btn2"  class="btn btn-primary" value="Delete Employee " />
 
-<input type="button" name="btn3" id="btn3"  class="btn btn-primary" value="Update Employee " />
+
+
+<form id="form_id">
+    <div class="form-row">
+        <div class="col">
+
+            ID:  <input type="text" name="id" id="id" value="" class="form-control" />
+
+        </div>
+        <div class="col">
+            Name : <input type="text" name="name" id="name" value="" class="form-control" />
+
+        </div>
+        <div class="col">
+            Father Name: <input type="text" name="fname" id="fname" value="" class="form-control" />
+        </div>
+
+    </div>
+
+
+
+
+
+    <br />
+    <br />
+
+
+    <input type="button" name="btn" id="modal" value="Add Employee " class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" />
+    <input type="button" name="btn2" id="btn2" value="Delete Employee " class="btn btn-primary" />
+
+    <input type="button" name="btn3" id="btn3" value="Update Employee " class="btn btn-primary" />
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> save data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>want to save your data</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn1">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<br />
+<br />
+<br />
+
+<div id="tab1"></div>
 
 
 <script>
@@ -32,6 +92,7 @@ Father Name: <input type="text" name="fname" id="textbox"  class="form-control" 
         $.getJSON("/api/infoes/", function (data) {
             $("#tab1").css("display", "block");
             $.each(data, function (key, val) {
+
                 $("<tr><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.fname + "</td></tr>").appendTo($("#tab1"));
 
 
@@ -63,6 +124,8 @@ Father Name: <input type="text" name="fname" id="textbox"  class="form-control" 
 
                 dataType: "JSON",
 
+
+
                 success: function (data) {
                     $("#tab1").find("tr:gt(0)").remove();
                     $.getJSON("/api/infoes/", function (data) {
@@ -79,6 +142,7 @@ Father Name: <input type="text" name="fname" id="textbox"  class="form-control" 
 
                 }
             });
+            $('#form_id').find('input:text').val(''); 
 
 
         })
@@ -175,36 +239,37 @@ Father Name: <input type="text" name="fname" id="textbox"  class="form-control" 
 
 
         })
+
     });
+    $('#modal').on('shown.bs.modal', function () {
+        $('#btn1').trigger('focus')
+    })
 
 </script>
-<script>
-    $(document).ready(function () {
-        $("#textbox").kendoTextBox();
-    });
-</script>
-<script>
 
-    $(document).ready(function () {
-        $("#tab1").kendoGrid({
-            sortable: true,
-            filterable: true
-        });
-    });
 
-        var dataSource = new kendo.data.DataSource({
+
+<script>
+   
+
+    var dataSource = new kendo.data.DataSource({
         transport: {
             read: {
                 url: "/api/infoes/",
                 dataType: "jsonp"
             }
         },
-        pageSize: 10
-       });
-    $("#grid").kendoGrid({
+
+    });
+
+    $("#tab1").kendoGrid({
+        columns: [
+            { field: "id" },
+            { field: "name" },
+            { field: "fname" }
+        ],
+
         dataSource: dataSource,
-        pageable: true
-     });
 
-
+    });
 </script>

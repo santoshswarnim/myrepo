@@ -84,6 +84,8 @@ namespace WebApplication12.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = info.id }, info);
         }
+        
+
 
         // DELETE: api/infoes/5
         [ResponseType(typeof(info))]

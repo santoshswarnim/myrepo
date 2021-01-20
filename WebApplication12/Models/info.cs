@@ -18,5 +18,14 @@ namespace WebApplication12.Models
         public string name { get; set; }
         public string fname { get; set; }
         public string country { get; set; }
+        public int? gender{ get; set; }
+
+        public string gendername
+        {
+            get {
+                return "xyz";
+            }
+        }
+
     }
 }

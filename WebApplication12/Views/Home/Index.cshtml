@@ -24,10 +24,16 @@
 
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
+
+
+<script src="~/Scripts/enum/genderenum.js"></script>
+
+
 
 
 
@@ -41,7 +47,7 @@
 
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form id="form_id">
+            <form id="form_id" >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"> save data</h5>
@@ -51,26 +57,32 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="form-row">
+                        <div class="row">
                             <div class="col">
 
 
-                                ID:  <input type="text" required name="id" id="id" value="" class="form-control" />
+                                ID:  <input type="text" name="id" id="id" value="" class="form-control" />
 
                             </div>
                             <div class="col">
-                                Name : <input type="text" required name="name" id="name" value="" class="form-control" />
+                                Name : <input type="text" name="name" id="name" value="" class="form-control" required />
 
                             </div>
                             <div class="col">
-                                Father Name: <input type="text" name="fname" id="fname" value="" class="form-control" />
+                                Father Name: <input type="text" name="fname" id="fname" value="" class="form-control" required />
                             </div>
 
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col">
 
 
                                     country:  <input type="text" name="country" id="country" value="" class="form-control" />
+
+                                </div>
+                                <div class="col">
+
+
+                                    gender:  <input  name="gender" id="gender" value="" class="form-control" />
 
                                 </div>
 
@@ -83,7 +95,7 @@
 
 
 
-                        <button type="submit" class="btn btn-primary" id="btn1" >Save changes</button>
+                        <button type="submit" class="btn btn-primary" id="btn1">Save changes</button>
 
                     </div>
 
@@ -97,6 +109,7 @@
 <br />
 <br />
 <br />
+
 
 <div id="tab1"></div>
 <br />
@@ -129,7 +142,7 @@
                 if (operation !== "read") {
                     return kendo.stringify(options);
                 }
-              
+
 
             },
 
@@ -144,6 +157,7 @@
                     name: { type: "text", validation: { required: true, min: 1 } },
                     fname: { type: "text", validation: { required: true, min: 1 } },
                     country: { type: "text", validation: { required: true, min: 1 } },
+                    gender: { type: "number", validation: { required: true, min: 1 } },
 
 
                 }
@@ -159,6 +173,7 @@
             { field: "name" },
             { field: "fname" },
             { field: "country" },
+            { field: "gender" },
             { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }
 
 
@@ -174,24 +189,39 @@
 
 </script>
 <script>
+
+
+
     $("#country").kendoDropDownList({
         dataSource: ["nepal", "india", "china"],
 
+
     });
+    $("#gender").kendoDropDownList({
+
+        dataSource: str,
+            dataTextField: "key",
+            dataValueField: "value"
+
+
+    });
+
 </script>
+
 <script>
     var validator = $("#form_id").kendoValidator().data("kendoValidator");
 
     // Validate the input when the Save button is clicked
-    $("#btn1").on("click", function () {
+
+
+    $("#btn1").on("click", function (e) {
+        e.preventDefault();
         if (validator.validate()) {
 
             // If the form is valid, the Validator will return true
             //POST
 
-            var name = $("#name").val();
-            var fname = $("#fname").val();
-            var country = $("#country").val();
+
             $.ajax({
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
@@ -200,12 +230,13 @@
                     name: $("#name").val(),
                     fname: $("#fname").val(),
                     country: $("#country").val(),
+                    gender: $("#gender").data(str).val(),
 
                 }),
                 dataType: "JSON",
                 success: function (data) {
 
-                    setInterval('location.reload()', 100);
+                   
                 }
             });
 
@@ -215,3 +246,4 @@
 
     });
 </script>
+

@@ -15,6 +15,9 @@ namespace WebApplication12.Controllers
     public class infoesController : ApiController
     {
         private todaydbEntities db = new todaydbEntities();
+      //get enum gender
+       
+
 
         // GET: api/infoes
         public IQueryable<info> Getinfoes()

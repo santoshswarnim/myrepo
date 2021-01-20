@@ -8,6 +8,7 @@
     <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="fname" Type="varchar" MaxLength="50" />
     <Property Name="country" Type="varchar" MaxLength="50" />
+    <Property Name="gender" Type="int" />
   </EntityType>
   <EntityType Name="user">
     <Key>
@@ -16,7 +17,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="username" Type="nchar" MaxLength="30" />
     <Property Name="password" Type="nchar" MaxLength="20" />
-    <Property Name="email" Type="nchar" MaxLength="30" />
   </EntityType>
   <EntityContainer Name="todaydbModelStoreContainer">
     <EntitySet Name="info" EntityType="Self.info" Schema="dbo" store:Type="Tables" />

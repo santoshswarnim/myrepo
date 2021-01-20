@@ -17,5 +17,6 @@ namespace WebApplication12.Models
         public int id { get; set; }
         public string name { get; set; }
         public string fname { get; set; }
+        public string country { get; set; }
     }
 }

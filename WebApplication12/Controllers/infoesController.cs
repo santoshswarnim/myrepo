@@ -37,17 +37,14 @@ namespace WebApplication12.Controllers
 
         // PUT: api/infoes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putinfo(int id, info info)
+        public IHttpActionResult Putinfo(info info)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != info.id)
-            {
-                return BadRequest();
-            }
+           
 
             db.Entry(info).State = EntityState.Modified;
 
@@ -57,7 +54,7 @@ namespace WebApplication12.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!infoExists(id))
+                if (!infoExists(info.id))
                 {
                     return NotFound();
                 }
@@ -89,9 +86,9 @@ namespace WebApplication12.Controllers
 
         // DELETE: api/infoes/5
         [ResponseType(typeof(info))]
-        public IHttpActionResult Deleteinfo(int id)
+        public IHttpActionResult Deleteinfo(info info)
         {
-            info info = db.infoes.Find(id);
+             info = db.infoes.Find(info.id);
             if (info == null)
             {
                 return NotFound();

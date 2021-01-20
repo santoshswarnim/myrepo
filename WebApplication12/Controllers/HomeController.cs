@@ -13,5 +13,9 @@ namespace WebApplication12.Controllers
         {
             return View();
         }
+        public ActionResult user()
+        {
+            return View();
+        }
     }
 }

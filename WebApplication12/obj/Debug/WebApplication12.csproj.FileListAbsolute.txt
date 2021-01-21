@@ -1,3 +1,4 @@
+C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.csproj.CoreCompileInputs.cache
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\WebApplication12.dll.config
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\WebApplication12.dll
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\WebApplication12.pdb
@@ -86,7 +87,7 @@ C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\System.Net.H
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\System.Web.Http.xml
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\System.Web.Http.WebHost.xml
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.csproj.CoreCompileInputs.cache
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.csproj.CopyComplete
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.dll
 C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.pdb
+C:\Users\santosh\source\repos\WebApplication12\WebApplication12\obj\Debug\WebApplication12.csprojAssemblyReference.cache

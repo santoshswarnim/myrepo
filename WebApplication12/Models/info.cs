@@ -11,21 +11,54 @@ namespace WebApplication12.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using WebApplication12.helper;
+
     public partial class info
     {
         public int id { get; set; }
         public string name { get; set; }
         public string fname { get; set; }
         public string country { get; set; }
-        public int? gender{ get; set; }
 
-        public string gendername
+
+#region gender
+        public int? gender { get; set; }
+     
+
+        public string Gendername
         {
-            get {
-                return "xyz";
+            get
+
+            {
+                if (gender!=null)
+                {
+                    if(gender == (int?)Gender.Male)
+                    {
+                        return "male";
+
+                    }
+                    else if (gender == (int?)Gender.Female)
+                    {
+                        return "female";
+                    }
+                    else
+                    {
+                        return "others";
+                    }
+
+
+                }
+                else
+                {
+                    return "notselcted";
+                }
+
             }
+
         }
 
+
+
     }
+#endregion
 }

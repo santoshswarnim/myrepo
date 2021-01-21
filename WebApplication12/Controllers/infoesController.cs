@@ -21,6 +21,7 @@ namespace WebApplication12.Controllers
 
         // GET: api/infoes
         public IQueryable<info> Getinfoes()
+            
         {
             return db.infoes;
         }

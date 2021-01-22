@@ -14,6 +14,7 @@
           <Property Name="fname" Type="varchar" MaxLength="50" />
           <Property Name="country" Type="varchar" MaxLength="50" />
           <Property Name="gender" Type="int" />
+          <Property Name="Datetime" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -40,6 +41,7 @@
           <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="gender" Type="Int32" />
+          <Property Name="Datetime" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -62,6 +64,7 @@
           <EntitySetMapping Name="infoes">
             <EntityTypeMapping TypeName="todaydbModel.info">
               <MappingFragment StoreEntitySet="info">
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="country" ColumnName="country" />
                 <ScalarProperty Name="id" ColumnName="id" />

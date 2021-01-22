@@ -4,6 +4,7 @@
     <EntitySetMapping Name="infoes">
       <EntityTypeMapping TypeName="todaydbModel.info">
         <MappingFragment StoreEntitySet="info">
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           <ScalarProperty Name="gender" ColumnName="gender" />
           <ScalarProperty Name="country" ColumnName="country" />
           <ScalarProperty Name="id" ColumnName="id" />

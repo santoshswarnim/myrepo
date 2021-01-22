@@ -10,8 +10,9 @@
 namespace WebApplication12.Models
 {
     using System;
-    using System.Collections.Generic;
     using WebApplication12.helper;
+
+    using System.Collections.Generic;
 
     public partial class info
     {
@@ -20,24 +21,23 @@ namespace WebApplication12.Models
         public string fname { get; set; }
         public string country { get; set; }
 
-
 #region gender
         public int? gender { get; set; }
-     
+
 
         public string Gendername
         {
             get
 
             {
-                if (gender!=null)
+                if (gender != null)
                 {
-                    if(gender == (int?)Gender.Male)
+                    if (gender == (int?)Gender.male)
                     {
                         return "male";
 
                     }
-                    else if (gender == (int?)Gender.Female)
+                    else if (gender == (int?)Gender.female)
                     {
                         return "female";
                     }
@@ -56,9 +56,8 @@ namespace WebApplication12.Models
             }
 
         }
-
-
-
-    }
 #endregion
+
+        public Nullable<System.DateTime> Datetime { get; set; }
+    }
 }

@@ -39,6 +39,7 @@ namespace WebApplication12.Controllers
             return Ok(info);
         }
 
+
         // PUT: api/infoes/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putinfo(info info)
@@ -70,6 +71,41 @@ namespace WebApplication12.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+        // PUT: api/infoes/update from id
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Putinfo(int id, info info)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != info.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(info).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!infoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
 
         // POST: api/infoes
         [ResponseType(typeof(info))]

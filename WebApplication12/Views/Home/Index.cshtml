@@ -5,7 +5,12 @@
 <h2>Management System </h2>
 <br />
 
-
+<style type="text/css">
+    .k-grid .k-grid-search {
+        margin-left: auto;
+        margin-right: 0;
+    }
+</style>
 
 
 
@@ -17,22 +22,20 @@
 <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.1028/styles/kendo.silver.min.css" />
 <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
 <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.3.1028/styles/kendo.mobile.all.min.css" />
+
 <script src="https://kendo.cdn.telerik.com/2021.1.119/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://kendo.cdn.telerik.com/2021.1.119/js/kendo.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 
-
-
-
-
-
 <script src="~/Scripts/enum/genderenum.js"></script>
 
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-
+<link href="~/Content/loader.css" rel="stylesheet" />
 
 
 
@@ -49,7 +52,7 @@
 
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form id="form_id">
+            <form id="form_id" name="forms">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"> save data</h5>
@@ -88,7 +91,7 @@
                                 <div class="col">
 
 
-                                    gender:  <input type="text" name="gender" id="gender" value="" class="form-control" />
+                                    gender:  <input name="gender" id="gender" value="" class="form-control" />
 
                                 </div>
                                 <div class="col">
@@ -126,10 +129,16 @@
 
 
 <div id="tab1"></div>
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 <br />
 
-<script>
 
+
+
+
+
+<script>
+    //displaying data in grid calling from database in form of json format.
     var url = "http://localhost:58666"
 
     var dataSource = new kendo.data.DataSource({
@@ -167,7 +176,9 @@
         schema: {
             model: {
                 id: "id",
+
                 fields: {
+
                     id: { editable: false, nullable: true },
                     name: { type: "text", validation: { required: true, min: 1 } },
                     fname: { type: "text", validation: { required: true, min: 1 } },
@@ -178,20 +189,55 @@
 
                 }
             }
-        }
+
+        },
+        data: name,
+        sortable: {
+            mode: "single",
+            allowUnsort: false
+        },
+
+        pageSize: 10
+
 
     });
     $("#tab1").kendoGrid({
-        selectable: "true",
-        allowCopy: true,
+        groupable: true,
+
+        height: 550,
+        scrollable: true,
+
+        filterable: {
+            extra: false,
+            operators: {
+                text: {
+                    startswith: "Starts with",
+                    eq: "Is equal to",
+                    neq: "Is not equal to"
+                }
+            }
+        },
+        //search bar
+        toolbar: ["search", "excel"],
+
+        pageable: true,
+
+
         columns: [
+            { selectable: true, width: "50px" },
             { field: "id" },
-            { field: "name" },
+            {
+                field: "name", type: "string", filterable: {
+                    ui: nameFilter
+                }, sortable: {
+                    initialDirection: "desc",
+                },
+            },
             { field: "fname" },
             { field: "country" },
             { field: "Gendername" },
             { field: "Datetime" },
-            // { command: { text: "Edit", click: onEdit }, title: "Edit " },
+            // { command: { text: "Edit", click: onEdit }, title: "Edit " }, for feault inlineedit
 
 
             { command: [{ text: "Edit", click: onEdit }, "destroy"], title: "Actions", width: "200px" }
@@ -199,13 +245,20 @@
 
 
         ],
-      
+
 
 
         dataSource: dataSource,
         editable: "inline"
 
     });
+    function nameFilter(element) {
+        element.kendoAutoComplete({
+            dataSource: dataSource.name,
+        });
+    };
+
+
     // populating selected row values in modal
     function onEdit(e) {
         e.preventDefault();
@@ -227,8 +280,6 @@
         var row = $(this).closest("tr");
         $("#tab1").data("kendoGrid").removeRow(row);
     });
-
-
 </script>
 <script>
 
@@ -257,7 +308,8 @@
 
 
     $("#btn1").on("click", function () {
-        $("#form_id").reset();
+
+
         if (validator.validate()) {
 
             // If the form is valid, the Validator will return true
@@ -278,13 +330,25 @@
 
                 }),
                 dataType: "JSON",
+                beforeSend: function () {
+                    $('#loader').removeClass('hidden')
+                },
+
                 success: function (data) {
+                    $('#exampleModal').modal('hide');
+                    $('#tab1').data("kendoGrid").dataSource = new kendo.data.DataSource({ data: result });
+                    $('#tab1').data("kendoGrid").dataSource.read();
+                    $('#tab1').data("kendoGrid").refresh();
+                    //location.reload(100);
 
-                    location.reload(100);
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
+                },
 
 
-                }
             });
+
 
 
 
@@ -305,7 +369,7 @@
 <script>
 
     $("#btn6").click(function () {
-        
+
 
         $.ajax({
 
@@ -325,7 +389,8 @@
                 gender: $("#gender").data(str).val(),
                 Datetime: $("#Datetime").val(),
                 success: function (data) {
-                    location.reload(100);
+                    //location.reload(100);
+                    $('#tab1').data("kendoGrid").refresh();
                 }
 
 
@@ -335,11 +400,18 @@
         });
 
         $('#exampleModal').modal('hide');
+        var grid = $("#tab1").data("kendoGrid");
+        grid.refresh();
 
 
     });
 
-    
+
+
+
+
+
 </script>
+
 
 
